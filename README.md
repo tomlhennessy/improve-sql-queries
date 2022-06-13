@@ -8,17 +8,13 @@ queries. Recall the benchmarking process below:
 
 ## Setup
 
-`cd` into the __sql-practice__ folder.
-
-Run `npm install` to install the dependencies.
-
-Execute the __cats.sql__, __toys.sql__, and __cat_toys.sql__ files in the
-terminal to build the database, and populate it with seed data.
+Execute the __setup-commands.sh__ script from the root directory of this
+practice to install required dependencies and seed your database. View the
+contents of the script to see the commands that are be executed, and view the
+results in the terminal to confirm that setup was successful.
 
 ```shell
-sqlite3 practice.db ".read cats.sql"
-sqlite3 practice.db ".read toys.sql"
-sqlite3 practice.db ".read cat_toys.sql"
+sh setup-commands.sh
 ```
 
 In the __sql-practice__ folder, open the __improve-sql-queries.sql__ file. You
