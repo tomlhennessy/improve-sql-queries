@@ -1,88 +1,33 @@
-----------
--- Step 0 - Create a Query 
-----------
--- Query: Select all cats that have a toy with an id of 5
+-- Step 0: Initial Query
+SELECT cats.*
+FROM cats
+JOIN cat_toys ON cats.id = cat_toys.cat_id
+WHERE cat_toys.toy_id = 5;
 
-    -- Your code here
+-- Step 1: Analyze the Query
+.timer on
+EXPLAIN QUERY PLAN
+SELECT cats.*
+FROM cats
+JOIN cat_toys ON cats.id = cat_toys.cat_id
+WHERE cat_toys.toy_id = 5;
 
--- Paste your results below (as a comment):
+-- Step 2: Baseline Timing
+-- Run Time: real 0.000 user 0.000071 sys 0.000033
 
+-- Step 3: Add Index
+DROP INDEX IF EXISTS idx_cat_toys_toy_id;  -- Ensure no duplicate index
+CREATE INDEX idx_cat_toys_toy_id ON cat_toys(toy_id);
 
+-- Step 4: Re-analyze the Query
+EXPLAIN QUERY PLAN
+SELECT cats.*
+FROM cats
+JOIN cat_toys ON cats.id = cat_toys.cat_id
+WHERE cat_toys.toy_id = 5;
 
-
-----------
--- Step 1 - Analyze the Query
-----------
--- Query:
-
-    -- Your code here
-
--- Paste your results below (as a comment):
-
-
--- What do your results mean?
-
-    -- Was this a SEARCH or SCAN?
-
-
-    -- What does that mean?
-
-
-
-
-----------
--- Step 2 - Time the Query to get a baseline
-----------
--- Query (to be used in the sqlite CLI):
-
-    -- Your code here
-
--- Paste your results below (as a comment):
-
-
-
-
-----------
--- Step 3 - Add an index and analyze how the query is executing
-----------
-
--- Create index:
-
-    -- Your code here
-
--- Analyze Query:
-    -- Your code here
-
--- Paste your results below (as a comment):
-
-
--- Analyze Results:
-
-    -- Is the new index being applied in this query?
-
-
-
-
-----------
--- Step 4 - Re-time the query using the new index
-----------
--- Query (to be used in the sqlite CLI):
-
-    -- Your code here
-
--- Paste your results below (as a comment):
-
-
--- Analyze Results:
-    -- Are you still getting the correct query results?
-
-
-    -- Did the execution time improve (decrease)?
-
-
-    -- Do you see any other opportunities for making this query more efficient?
-
-
----------------------------------
--- Notes From Further Exploration
----------------------------------
+-- Step 4: Re-time the Query
+-- Run Time: real 0.000 user 0.000044 sys 0.000004
+-- Observations:
+-- - The query is significantly faster after the index was applied.
+-- - The index is effectively being used in the query plan.
